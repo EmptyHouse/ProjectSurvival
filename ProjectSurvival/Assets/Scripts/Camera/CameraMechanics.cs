@@ -2,8 +2,11 @@
 using System.Collections;
 
 public class CameraMechanics : MonoBehaviour {
-    public float cameraAcceleration;
-    public float maxSpeed;
+    public float cameraAcceleration = 15;
+    public float maxSpeed = 10;
+    public float zoomAcceleration = 10;
+    public float maxZoomFactor;
+    public float minZoomFactor;
 
     Transform cameraFollow;
     Rigidbody rigid;
@@ -29,10 +32,15 @@ public class CameraMechanics : MonoBehaviour {
         updateLocation();
     }
 
+    void udpateZoom(float zoomFactor)
+    {
+
+    }
+
     void updateLocation()
     {
-        Vector3 goalLocation = (cameraFollow.position + offsetUnitVec * currentMagnitude);
-        Vector3 goalVelocity = (transform.position - goalLocation).normalized * maxSpeed;
+        Vector3 goalLocation = (cameraFollow.position + (offsetUnitVec * currentMagnitude));
+        Vector3 goalVelocity = (-transform.position + goalLocation) * maxSpeed;
         rigid.velocity = Vector3.Lerp(rigid.velocity, goalVelocity, Time.fixedDeltaTime * cameraAcceleration);
     }
 
